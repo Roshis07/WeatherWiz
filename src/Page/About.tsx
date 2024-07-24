@@ -19,9 +19,9 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.common.black, 0.15), // Adjusted for visibility on transparent background
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.black, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -46,7 +46,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -123,10 +122,10 @@ export default function About() {
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
-            <MailIcon />
+            <MailIcon sx={{ color: "black" }} /> {/* Black icon */}
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p style={{ color: "black" }}>Messages</p> {/* Black text */}
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -135,10 +134,10 @@ export default function About() {
           color="inherit"
         >
           <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
+            <NotificationsIcon sx={{ color: "black" }} /> {/* Black icon */}
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p style={{ color: "black" }}>Notifications</p> {/* Black text */}
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -148,16 +147,25 @@ export default function About() {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <AccountCircle sx={{ color: "black" }} /> {/* Black icon */}
         </IconButton>
-        <p>Profile</p>
+        <p style={{ color: "black" }}>Profile</p> {/* Black text */}
       </MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "transparent", // Fully transparent background
+          backdropFilter: "blur(10px)", // Optional: for a blurred effect
+          boxShadow: "none", // Remove shadow
+          borderBottom: "none", // Remove border line
+          color: "black", // Text and icon color
+        }}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -166,27 +174,28 @@ export default function About() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "black" }} /> {/* Black icon */}
           </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" }, color: "black" }} // Black text color
           >
             MUI
           </Typography>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{ color: "black" }} /> {/* Black icon */}
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              sx={{ color: "black" }} // Black input text color
             />
           </Search>
-          <h1>WeatherWiz</h1>
-
+          <h1 style={{ color: "black" }}>WeatherWiz</h1>{" "}
+          {/* Black text color */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
@@ -195,7 +204,7 @@ export default function About() {
               color="inherit"
             >
               <Badge badgeContent={4} color="error">
-                <MailIcon />
+                <MailIcon sx={{ color: "black" }} /> {/* Black icon */}
               </Badge>
             </IconButton>
             <IconButton
@@ -204,7 +213,7 @@ export default function About() {
               color="inherit"
             >
               <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+                <NotificationsIcon sx={{ color: "black" }} /> {/* Black icon */}
               </Badge>
             </IconButton>
             <IconButton
@@ -216,7 +225,7 @@ export default function About() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle sx={{ color: "black" }} /> {/* Black icon */}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -228,7 +237,7 @@ export default function About() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MoreIcon sx={{ color: "black" }} /> {/* Black icon */}
             </IconButton>
           </Box>
         </Toolbar>
