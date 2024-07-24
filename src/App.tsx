@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import HomePage from "./Page/HomePage";
+import About from "./Page/About";
 const theme = createTheme({});
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <h1>WeatherWiz </h1>
-      </div>
+      <About></About>
+      <HomePage></HomePage>
     </ThemeProvider>
   );
 }
