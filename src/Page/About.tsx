@@ -50,7 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "30ch",
     },
   },
 }));
@@ -119,26 +119,6 @@ export default function About() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon sx={{ color: "black" }} /> {/* Black icon */}
-          </Badge>
-        </IconButton>
-        <p style={{ color: "black" }}>Messages</p> {/* Black text */}
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon sx={{ color: "black" }} /> {/* Black icon */}
-          </Badge>
-        </IconButton>
-        <p style={{ color: "black" }}>Notifications</p> {/* Black text */}
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -147,9 +127,9 @@ export default function About() {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle sx={{ color: "black" }} /> {/* Black icon */}
+          <AccountCircle sx={{ color: "black" }} />
         </IconButton>
-        <p style={{ color: "black" }}>Profile</p> {/* Black text */}
+        <p style={{ color: "black" }}>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -159,11 +139,11 @@ export default function About() {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "transparent", // Fully transparent background
-          backdropFilter: "blur(10px)", // Optional: for a blurred effect
-          boxShadow: "none", // Remove shadow
-          borderBottom: "none", // Remove border line
-          color: "black", // Text and icon color
+          backgroundColor: "transparent",
+          backdropFilter: "blur(10px)",
+          boxShadow: "none",
+          borderBottom: "none",
+          color: "black",
         }}
       >
         <Toolbar>
@@ -174,48 +154,32 @@ export default function About() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon sx={{ color: "black" }} /> {/* Black icon */}
+            <MenuIcon sx={{ color: "black" }} />
           </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" }, color: "black" }} // Black text color
+            sx={{ display: { xs: "none", sm: "block" }, color: "black" }}
           >
-            MUI
+            Home
           </Typography>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon sx={{ color: "black" }} /> {/* Black icon */}
+              <SearchIcon sx={{ color: "black" }} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
-              sx={{ color: "black" }} // Black input text color
+              sx={{ color: "black" }}
             />
           </Search>
-          <h1 style={{ color: "black" }}>WeatherWiz</h1>{" "}
-          {/* Black text color */}
+          <h1 style={{ color: "black", marginLeft: "80px" }}>WeatherWiz</h1>{" "}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon sx={{ color: "black" }} /> {/* Black icon */}
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon sx={{ color: "black" }} /> {/* Black icon */}
-              </Badge>
-            </IconButton>
+            <p>
+              <strong>About</strong>
+            </p>
             <IconButton
               size="large"
               edge="end"
@@ -225,7 +189,7 @@ export default function About() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle sx={{ color: "black" }} /> {/* Black icon */}
+              <AccountCircle sx={{ color: "black" }} />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -237,7 +201,7 @@ export default function About() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon sx={{ color: "black" }} /> {/* Black icon */}
+              <MoreIcon sx={{ color: "black" }} />
             </IconButton>
           </Box>
         </Toolbar>
