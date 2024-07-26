@@ -1,14 +1,32 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import HomePage from "./Page/HomePage";
 import About from "./Page/About";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Box } from "@mui/material";
+import backgroundImage from "../src/assets/image/background.jpg";
+import WeatherMainPage from "./Page/WeatherMainPage";
+
 const theme = createTheme({});
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <HomePage></HomePage>
+      <Box
+        sx={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </BrowserRouter>
+        <WeatherMainPage></WeatherMainPage>
+      </Box>
     </ThemeProvider>
   );
 }
