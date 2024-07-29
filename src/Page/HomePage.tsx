@@ -8,12 +8,13 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import Button from "@mui/material/Button"; // Import Button component
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import About from "./About";
 import { Link } from "react-router-dom";
+import WeatherMainPage from "./WeatherMainPage";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -25,6 +26,8 @@ const Search = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
+  display: "flex", // Use flexbox for layout
+  alignItems: "center", // Center items vertically
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -58,6 +61,10 @@ export default function HomePage() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [weatherData, setWeatherData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<Error | null>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -79,20 +86,63 @@ export default function HomePage() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const fetchWeatherData = async (query: string) => {
+    setLoading(true);
+    try {
+      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=1bcab1c1c7744105b8811901242407&q=${query}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error);
+      } else {
+        setError(new Error("An unknown error occurred"));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    const getUserLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            fetchWeatherData(`${latitude},${longitude}`);
+          },
+          (error) => {
+            setError(new Error(`Geolocation error: ${error.message}`));
+            setLoading(false);
+          }
+        );
+      } else {
+        setError(new Error("Geolocation is not supported by this browser."));
+        setLoading(false);
+      }
+    };
+
+    getUserLocation();
+  }, []);
+
+  const handleSearch = () => {
+    if (searchQuery) {
+      fetchWeatherData(searchQuery);
+    }
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -105,16 +155,10 @@ export default function HomePage() {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -134,11 +178,7 @@ export default function HomePage() {
   );
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-      }}
-    >
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
         sx={{
@@ -174,8 +214,25 @@ export default function HomePage() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
               sx={{ color: "black" }}
             />
+            <Button
+              variant="contained"
+              sx={{
+                ml: 1,
+                backgroundColor: "purple",
+                "&:hover": { backgroundColor: "green" },
+              }}
+              onClick={handleSearch}
+            >
+              Find
+            </Button>
           </Search>
           <h1 style={{ color: "black", marginLeft: "80px" }}>WeatherWiz</h1>
           <Box sx={{ flexGrow: 1 }} />
@@ -219,6 +276,11 @@ export default function HomePage() {
       {renderMobileMenu}
       {renderMenu}
       <Box sx={{ pt: 8 }}></Box>
+      <WeatherMainPage
+        weatherData={weatherData}
+        loading={loading}
+        error={error}
+      />
     </Box>
   );
 }

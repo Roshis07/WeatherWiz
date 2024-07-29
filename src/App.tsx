@@ -4,7 +4,6 @@ import About from "./Page/About";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 import backgroundImage from "../src/assets/image/background.jpg";
-import WeatherMainPage from "./Page/WeatherMainPage";
 
 const theme = createTheme({});
 
@@ -25,7 +24,6 @@ function App() {
             <Route path="/about" element={<About />} />
           </Routes>
         </BrowserRouter>
-        <WeatherMainPage></WeatherMainPage>
       </Box>
     </ThemeProvider>
   );
