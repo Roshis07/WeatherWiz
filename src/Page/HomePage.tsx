@@ -85,17 +85,31 @@ export default function HomePage() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
   const fetchWeatherData = async (query: string) => {
     setLoading(true);
     try {
-      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=1bcab1c1c7744105b8811901242407&q=${query}`;
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const currentWeatherUrl = `https://api.weatherapi.com/v1/current.json?key=1bcab1c1c7744105b8811901242407&q=${query}`;
+      const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=1bcab1c1c7744105b8811901242407&q=${query}&days=3`;
+
+      const [currentResponse, forecastResponse] = await Promise.all([
+        fetch(currentWeatherUrl),
+        fetch(forecastUrl),
+      ]);
+
+      if (!currentResponse.ok || !forecastResponse.ok) {
+        throw new Error(`One or both requests failed.`);
       }
-      const data = await response.json();
-      setWeatherData(data);
+
+      const currentData = await currentResponse.json();
+      const forecastData = await forecastResponse.json();
+
+      const combinedData = {
+        current: currentData,
+        forecast: forecastData,
+      };
+
+      setWeatherData(combinedData);
+      console.log(combinedData);
     } catch (error) {
       if (error instanceof Error) {
         setError(error);
