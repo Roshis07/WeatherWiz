@@ -9,7 +9,7 @@ const WeatherMainPage: React.FC = () => {
   useEffect(() => {
     const fetchWeatherData = async (lat: number, lon: number) => {
       try {
-        const apiUrl = `http://api.weatherapi.com/v1/current.json?key=1bcab1c1c7744105b8811901242407&q=${lat},${lon}`;
+        const apiUrl = `https://api.weatherapi.com/v1/current.json?key=1bcab1c1c7744105b8811901242407&q=${lat},${lon}`;
 
         const response = await fetch(apiUrl);
 
