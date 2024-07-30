@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -8,13 +10,12 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import Button from "@mui/material/Button"; // Import Button component
+import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Link } from "react-router-dom";
-import WeatherMainPage from "./WeatherMainPage";
+import DataFetch from "../Components/DataFetch";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -26,8 +27,8 @@ const Search = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
-  display: "flex", // Use flexbox for layout
-  alignItems: "center", // Center items vertically
+  display: "flex",
+  alignItems: "center",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -62,9 +63,7 @@ export default function HomePage() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const [searchQuery, setSearchQuery] = React.useState<string>("");
-  const [weatherData, setWeatherData] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<Error | null>(null);
+  const [searchData, setSearchData] = React.useState<string>("");
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -85,67 +84,10 @@ export default function HomePage() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const fetchWeatherData = async (query: string) => {
-    setLoading(true);
-    try {
-      const currentWeatherUrl = `https://api.weatherapi.com/v1/current.json?key=1bcab1c1c7744105b8811901242407&q=${query}`;
-      const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=1bcab1c1c7744105b8811901242407&q=${query}&days=3`;
-
-      const [currentResponse, forecastResponse] = await Promise.all([
-        fetch(currentWeatherUrl),
-        fetch(forecastUrl),
-      ]);
-
-      if (!currentResponse.ok || !forecastResponse.ok) {
-        throw new Error(`One or both requests failed.`);
-      }
-
-      const currentData = await currentResponse.json();
-      const forecastData = await forecastResponse.json();
-
-      const combinedData = {
-        current: currentData,
-        forecast: forecastData,
-      };
-
-      setWeatherData(combinedData);
-      console.log(combinedData);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error);
-      } else {
-        setError(new Error("An unknown error occurred"));
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    const getUserLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            fetchWeatherData(`${latitude},${longitude}`);
-          },
-          (error) => {
-            setError(new Error(`Geolocation error: ${error.message}`));
-            setLoading(false);
-          }
-        );
-      } else {
-        setError(new Error("Geolocation is not supported by this browser."));
-        setLoading(false);
-      }
-    };
-
-    getUserLocation();
-  }, []);
 
   const handleSearch = () => {
     if (searchQuery) {
-      fetchWeatherData(searchQuery);
+      setSearchData(searchQuery);
     }
   };
 
@@ -290,11 +232,7 @@ export default function HomePage() {
       {renderMobileMenu}
       {renderMenu}
       <Box sx={{ pt: 8 }}></Box>
-      <WeatherMainPage
-        weatherData={weatherData}
-        loading={loading}
-        error={error}
-      />
+      <DataFetch searchData={searchData} />
     </Box>
   );
 }

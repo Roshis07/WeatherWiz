@@ -14,7 +14,7 @@ function App() {
         sx={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
-          height: "100vh",
+          height: "100%",
           width: "100%",
         }}
       >
