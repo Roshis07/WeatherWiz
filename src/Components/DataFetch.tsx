@@ -1,5 +1,9 @@
 import React from "react";
-import WeatherMainPage from "../Page/WeatherMainPage";
+import { Routes, Route } from "react-router-dom";
+import CurrentWeather from "../Page/CurrentWeather";
+import HourlyWeatherForecast from "../Page/HourlyWeatherForecast";
+import FutureDayForecast from "../Page/FutureDayForecast";
+import WeatherNavBar from "./WeatherNavBar";
 
 interface DataFetchProps {
   searchData: string;
@@ -84,11 +88,25 @@ const DataFetch: React.FC<DataFetchProps> = ({ searchData }) => {
 
   return (
     <div>
-      <WeatherMainPage
-        weatherData={weatherData}
-        loading={loading}
-        error={error}
-      />
+      <WeatherNavBar />
+      <Routes>
+        <Route
+          path="current"
+          element={<CurrentWeather weatherData={weatherData} />}
+        />
+        <Route
+          path="hourly"
+          element={<HourlyWeatherForecast weatherData={weatherData} />}
+        />
+        <Route
+          path="forecast"
+          element={<FutureDayForecast weatherData={weatherData} />}
+        />
+        <Route
+          path="/"
+          element={<CurrentWeather weatherData={weatherData} />}
+        />
+      </Routes>
     </div>
   );
 };
