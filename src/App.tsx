@@ -156,8 +156,10 @@ function App() {
         sx={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
-          height: "100%",
+          backgroundRepeat: "repeat-y",
+          height: "100vh",
           width: "100%",
+          objectFit: "cover",
         }}
       >
         <BrowserRouter>
