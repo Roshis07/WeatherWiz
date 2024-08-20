@@ -34,12 +34,16 @@ const WeatherNavBar: React.FC = () => {
             alignItems: "center",
             overflow: "hidden",
             position: "relative",
+            height: { xs: "20px", sm: "auto" },
+            "@media (max-width:600px)": {
+              height: "20px",
+            },
           }}
         >
           <Box
             sx={{
               backgroundColor: "#007bff",
-              padding: 1,
+              padding: 0.5,
               borderRadius: 1,
               width: "100%",
               height: "100%",
@@ -67,6 +71,7 @@ const WeatherNavBar: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
+                fontSize: { xs: "0.2rem", sm: "0.2rem" },
               }}
             >
               <Typography variant="h6">Current Weather</Typography>
@@ -83,12 +88,16 @@ const WeatherNavBar: React.FC = () => {
             alignItems: "center",
             overflow: "hidden",
             position: "relative",
+            height: { xs: "20px", sm: "auto" },
+            "@media (max-width:600px)": {
+              height: "20px",
+            },
           }}
         >
           <Box
             sx={{
               backgroundColor: "#6be0f5",
-              padding: 1,
+              padding: 0.5,
               borderRadius: 1,
               width: "100%",
               height: "100%",
@@ -116,6 +125,7 @@ const WeatherNavBar: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
+                fontSize: { xs: "0.2rem", sm: "0.2rem" },
               }}
             >
               <Typography variant="h6">Hourly Weather</Typography>
@@ -132,12 +142,16 @@ const WeatherNavBar: React.FC = () => {
             alignItems: "center",
             overflow: "hidden",
             position: "relative",
+            height: { xs: "20px", sm: "auto" },
+            "@media (max-width:600px)": {
+              height: "20px",
+            },
           }}
         >
           <Box
             sx={{
               backgroundColor: "#2ab8e0",
-              padding: 1,
+              padding: 0.5,
               borderRadius: 1,
               width: "100%",
               height: "100%",
@@ -165,6 +179,7 @@ const WeatherNavBar: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
+                fontSize: { xs: "0.1rem", sm: "0.2rem" },
               }}
             >
               <Typography variant="h6">Forecast for Next Three Days</Typography>
